@@ -6,5 +6,15 @@ import { Macroable } from '../Macroable.mjs'
  * @return {any}
  */
 export const Macro = (target) => {
-  return Object.defineProperties(target, Object.getOwnPropertyDescriptors(Macroable))
+  const entries = Object
+    .entries(Object.getOwnPropertyDescriptors(Macroable))
+    .filter(([name]) => !['length', 'prototype'].includes(name))
+
+  for (const [name, value] of entries) {
+    if (!target[name]) {
+      Object.defineProperty(target, name, value)
+    }
+  }
+
+  return target
 }

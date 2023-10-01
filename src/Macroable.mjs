@@ -6,7 +6,7 @@
 export class Macroable {
   static macro (name, macro) {
     this._validateMacro(name, macro)
-    
+
     this._macros ??= new Map()
     this._macros.set(name, macro)
 
@@ -17,14 +17,24 @@ export class Macroable {
       Object.defineProperty(this, name, macro)
       Object.defineProperty(this.prototype, name, macro)
     }
+
+    return this
   }
 
   static mixin (mixin, replace = true) {
-    for (const [name, value] of Object.entries(Object.getOwnPropertyDescriptors(mixin))) {
+    const entries = Object
+      .entries({
+        ...Object.getOwnPropertyDescriptors(mixin),
+        ...Object.getOwnPropertyDescriptors(mixin.prototype ?? {})
+      })
+      .filter(([name]) => !['length', 'prototype'].includes(name))
+
+    for (const [name, value] of entries) {
       if (replace || !this.hasMacro(name)) {
         this.macro(name, value)
       }
     }
+
     return this
   }
 
@@ -51,8 +61,10 @@ export class Macroable {
       throw new Error('The first argument must be a valid string.')
     }
 
-    if (!(typeof macro === 'function' || (typeof macro === 'object' && macro.value))) {
+    if (!(typeof macro === 'function' || typeof macro === 'object')) {
       throw new Error('The second argument must be a function or a property descriptor')
     }
+
+    return this
   }
 }
