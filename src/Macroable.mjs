@@ -1,4 +1,4 @@
-import { MacroableException } from "./exceptions/MacroableException.mjs"
+import { MacroableException } from './exceptions/MacroableException.mjs'
 
 /**
  * Class representing a Macroable.
