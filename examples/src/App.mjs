@@ -1,4 +1,4 @@
-import { Macro } from '../../src/index.mjs'
+import { Macro } from '@stone-js/macroable'
 
 @Macro
 export class App {}
