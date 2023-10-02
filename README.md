@@ -5,7 +5,7 @@
 ![npm](https://img.shields.io/npm/dm/@stone-js/macroable)
 ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
-Fluent API to add properties and mixins to your JS Class
+Fluent and Simple API to add properties and mixins to your JS Class
 
 ## Table of Contents
 

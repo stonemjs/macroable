@@ -1,3 +1,5 @@
+import { MacroableException } from "./exceptions/MacroableException.mjs"
+
 /**
  * Class representing a Macroable.
  *
@@ -57,12 +59,12 @@ export class Macroable {
   }
 
   static _validateMacro (name, macro) {
-    if (!name) {
-      throw new Error('The first argument must be a valid string.')
+    if (typeof name !== 'string') {
+      throw new MacroableException('The first argument must be a valid string.')
     }
 
     if (!(typeof macro === 'function' || typeof macro === 'object')) {
-      throw new Error('The second argument must be a function or a property descriptor')
+      throw new MacroableException('The second argument must be a function or a property descriptor.')
     }
 
     return this

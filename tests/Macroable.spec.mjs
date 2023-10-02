@@ -1,15 +1,24 @@
 import { Macroable } from '../src/index.mjs'
+import { MacroableException } from '../src/exceptions/MacroableException.mjs'
 
 describe('Macroable', () => {
-  const macroable = new Macroable()
+  describe('macro', () => {
+    it('should throw an `MacroableException` for invalid name', function () {
+      // Assert
+      this.assert.throws(
+        () => Macroable.macro(true, () => {}),
+        MacroableException,
+        'The first argument must be a valid string.'
+      )
+    })
 
-  beforeEach(() => {
-    macroable.clear()
-  })
-
-  describe('test', () => {
-    it('should return a resolved instance', function () {
-      this.assert.equal('StoneJS', 'StoneJS')
+    it('should throw an `MacroableException` for invalid macro', function () {
+      // Assert
+      this.assert.throws(
+        () => Macroable.macro('name', true),
+        MacroableException,
+        'The second argument must be a function or a property descriptor.'
+      )
     })
   })
 })
